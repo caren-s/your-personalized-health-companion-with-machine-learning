@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<style>
+    /* Style for the background image container */
+    .background-image-container {
+        position: fixed; /* Fixed position to cover the entire viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        transition: background-image 2s ease-in-out; /* Smooth transition for background image */
+    }
+
+    /* Style for the content inside the background image container */
+    .content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 1;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Transparent box shadow */
+        padding: 40px; /* Add more padding to the content */
+        width: 60%; /* Set width to a larger percentage */
+        max-height: 90vh; /* Limit height to 90% of viewport height */
+        overflow-y: auto; /* Add scroll bar for overflow content */
+    }
+
+    /* Additional styles for the "Explore" button */
+    .explore-button {
+        margin-top: 20px;
+    }
+     .content p {
+        font-size: 22px; /* Adjust font size as needed */
+        color: #f8f9fa;
+
+    }
+</style>
+
+<div id="bgImage" class="background-image-container">
+    <div class="content">
+        <h1>Welcome to Your Personalized Health Companion</h1>
+        <p>Explore your personalized health recommendations.</p>
+        <form action="/explore" method="POST">
+            <input type="hidden" name="explore_action" value="explore">
+            <button type="submit" class="btn btn-primary explore-button">Explore</button>
+        </form>
+        <!-- Add other content here -->
+    </div>
+</div>
+
+<script>
+    const images = ["static/img.jpg", "static/img_1.jpg", "static/img_2.jpeg", "static/img_4.jpeg"]; // Update image paths
+    let currentIndex = 0;
+
+    function changeBackground() {
+        document.getElementById('bgImage').style.backgroundImage = `url('${images[currentIndex]}')`;
+        currentIndex = (currentIndex + 1) % images.length;
+
+        // Check if currentIndex is zero (reached end of images)
+        // If so, reset it to 0 after a delay
+        if (currentIndex === 0) {
+            setTimeout(() => {
+                document.getElementById('bgImage').style.backgroundImage = `url('${images[currentIndex]}')`;
+                currentIndex = (currentIndex + 1) % images.length;
+            }, 6000); // Delay before resetting
+        }
+
+        setTimeout(changeBackground, 3000); // Change every 3 seconds
+    }
+
+    changeBackground();
+</script>
+{% endblock %}

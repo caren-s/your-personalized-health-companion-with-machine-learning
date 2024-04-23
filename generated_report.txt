@@ -1,0 +1,29 @@
+Patient Symptoms: 
+Predicted Disease: Allergy
+
+Description:
+Allergy is an immune system reaction to a substance in the environment.
+
+Precautions:
+- apply calamine
+- cover area with bandage
+- nan
+- use ice to compress itching
+
+Medication:
+- ['Antihistamines', 'Decongestants', 'Epinephrine', 'Corticosteroids', 'Immunotherapy']
+
+Diets:
+- ['Elimination Diet', 'Omega-3-rich foods', 'Vitamin C-rich foods', 'Quercetin-rich foods', 'Probiotics']
+
+Workouts:
+- Avoid allergenic foods
+- Consume anti-inflammatory foods
+- Include omega-3 fatty acids
+- Stay hydrated
+- Eat foods rich in vitamin C
+- Include quercetin-rich foods
+- Consume local honey
+- Limit processed foods
+- Include ginger in diet
+- Avoid artificial additives

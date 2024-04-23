@@ -1,0 +1,10 @@
+Patient Symptoms: 
+Predicted Disease: Allergy
+Description: No description provided
+Precaution:
+
+Medication:
+
+Workouts:
+
+Diets:

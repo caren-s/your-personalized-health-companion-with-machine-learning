@@ -1,0 +1,199 @@
+{% extends "base.html" %} {% block title %}Explore{% endblock %}
+{% block content %}
+
+<div id="mainContent">
+        <!-- Your main content here -->
+        <h1 class="text-center mt-20">Your Personalized Health Companion</h1>
+    <div class="container mt-4 my-4" style="background:#5DADE2;color:white;border-radius:12px;padding:50px;">
+      <form action="/predict" method="post">
+        <div class="form-group">
+          <label for="symptoms">Type your symptoms</label>
+          <input type="text" class="form-control" name="symptoms" placeholder="enter symptoms like itching, vomiting, shivering">
+        </div>
+        <br>
+        <button class="btn btn-danger" style="width:100%;padding:14px;margin-bottom:5px;">Predict</button>
+      </form>
+
+     </div>
+     {% if predicted_disease %}
+     <h1 class="text-center mt-4 my-4">Our AI Doc Results</h1>
+     <div class="container">
+       <div class="result-container d-flex justify-content-center align-items-center">
+         <!-- Buttons to toggle display -->
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#diseaseModal" style="padding:4px;  margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F39334;color:black;">Disease</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#descriptionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#268AF3 ;color:black;">Description</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#precautionModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#F371F9 ;color:black;">Precaution</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#medicationsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px;border-radius:5px; background:#F8576F ;color:black;">Medications</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#workoutsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#99F741 ;color:black;">Workouts</button>
+        <button class="toggle-button" data-bs-toggle="modal" data-bs-target="#dietsModal" style="padding:4px; margin: 5px 40px 5px 0; font-size:20px;font-weight:bold; width:140px; border-radius:5px; background:#E5E23D;color:black;">Diets</button>
+       </div>
+
+     </div>
+
+
+      {% endif %}
+<!--  Disease Modal    -->
+      <div class="modal fade" id="diseaseModal" tabindex="-1" aria-labelledby="diseaseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;"> <!-- Set header background color inline -->
+                    <h5 class="modal-title" id="diseaseModalLabel">Predicted Disease</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background-color: #modal-body-color;"> <!-- Set modal body background color inline -->
+                    <p>{{ predicted_disease }}</p>
+                </div>
+            </div>
+        </div>
+      </div>
+<!-- Description Modal -->
+      <div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ dis_desc }}</p>
+                </div>
+            </div>
+        </div>
+      </div>
+<!-- Precaution Modal -->
+    <div class="modal fade" id="precautionModal" tabindex="-1" aria-labelledby="precautionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="precautionModalLabel">Precaution</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in dis_pre %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!-- Medications Modal -->
+    <div class="modal fade" id="medicationsModal" tabindex="-1" aria-labelledby="medicationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="medicationsModalLabel">Medications</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in dis_med %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!-- Workouts Modal -->
+    <div class="modal fade" id="workoutsModal" tabindex="-1" aria-labelledby="workoutsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="workoutsModalLabel">Workouts</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in dis_wrkout %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!-- Diets Modal -->
+    <div class="modal fade" id="dietsModal" tabindex="-1" aria-labelledby="dietsModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #020606; color:white;">
+                    <h5 class="modal-title" id="dietsModalLabel">Diets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        {% for i in dis_diet %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% if predicted_disease %}
+        <!-- Button to trigger the modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reportModal">Generate Report</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalLabel">Generate Report</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Display the report content here -->
+                        <h3>Generated Report</h3>
+                        <p><strong>Patient Symptoms:</strong> {{ symptoms }}</p>
+                        <p><strong>Predicted Disease:</strong> {{ predicted_disease }}</p>
+                        <h4>Description:</h4>
+                        <p>{{ dis_desc }}</p>
+                        <h4>Precaution:</h4>
+                        <ul>
+                            {% for item in dis_pre %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h4>Medication:</h4>
+                        <ul>
+                            {% for item in dis_med %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h4>Workouts:</h4>
+                        <ul>
+                            {% for item in dis_wrkout %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h4>Diets:</h4>
+                        <ul>
+                            {% for item in dis_diet %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <!-- Include other report details here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="/generate_report" method="post">
+                            <input type="hidden" name="symptoms" value="{{ symptoms }}">
+                            <input type="hidden" name="predicted_disease" value="{{ predicted_disease }}">
+                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    </div>
+</div>
+
+
+{% endblock %}
